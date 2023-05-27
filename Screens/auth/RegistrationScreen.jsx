@@ -15,7 +15,7 @@ import {
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { useState } from 'react';
-import { render } from 'react-native-web';
+import * as ImagePicker from 'expo-image-picker';
 
 const loadApplication = async () => {
     await Font.loadAsync({
@@ -27,6 +27,7 @@ const RegistrationScreen = () => {
     const [isReady, setIsReady] = useState(false);
     const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
 
+    const [avatar, setAvatar] = useState(null);
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -38,6 +39,23 @@ const RegistrationScreen = () => {
     const hideKeyboard = () => {
         setIsShowKeyBoard(false);
         Keyboard.dismiss();
+    };
+
+    const pickImage = async () => {
+        if (avatar) {
+            setAvatar(null);
+            return;
+        }
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setAvatar(result.assets[0].uri);
+        }
     };
 
     if (!isReady) {
@@ -72,18 +90,48 @@ const RegistrationScreen = () => {
                         }}
                     >
                         <View style={styles.imageWrapper}>
-                            <Image
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    zIndex: 13,
-                                }}
-                            />
-                            <TouchableOpacity>
+                            {avatar ? (
                                 <Image
-                                    style={{ top: -40, left: 106, zIndex: 14 }}
-                                    source={require('../../assets/images/plusIcon.png')}
+                                    source={{ uri: avatar }}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        borderRadius: 16,
+                                        zIndex: 13,
+                                    }}
                                 />
+                            ) : (
+                                <Image
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        borderRadius: 16,
+                                        zIndex: 13,
+                                    }}
+                                    source={require('../../assets/images/noAvatar.png')}
+                                />
+                            )}
+
+                            <TouchableOpacity
+                                onPress={pickImage}
+                                style={{ zIndex: 16 }}
+                            >
+                                {avatar ? (
+                                    <Image
+                                        style={{
+                                            top: -45,
+                                            left: 101,
+                                            width: 40,
+                                            height: 40,
+                                        }}
+                                        source={require('../../assets/images/crossIcon.png')}
+                                    />
+                                ) : (
+                                    <Image
+                                        style={{ top: -40, left: 106 }}
+                                        source={require('../../assets/images/plusIcon.png')}
+                                    />
+                                )}
                             </TouchableOpacity>
                         </View>
                         <Text style={styles.title}>Реєстрація</Text>
