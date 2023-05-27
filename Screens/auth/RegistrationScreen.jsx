@@ -15,6 +15,7 @@ import {
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { useState } from 'react';
+import { render } from 'react-native-web';
 
 const loadApplication = async () => {
     await Font.loadAsync({
@@ -88,22 +89,43 @@ const RegistrationScreen = () => {
                         <Text style={styles.title}>Реєстрація</Text>
                         <View style={styles.form}>
                             <TextInput
-                                style={styles.input}
+                                style={{
+                                    ...styles.input,
+                                    backgroundColor:
+                                        login !== '' ? '#FFFFFF' : '#F6F6F6',
+                                    color: login !== '' ? '#212121' : '#BDBDBD',
+                                }}
                                 placeholder="Логін"
+                                autoCapitalize="none"
                                 onFocus={() => setIsShowKeyBoard(true)}
                                 onChangeText={setLogin}
                                 value={login}
                             />
                             <TextInput
-                                style={{ ...styles.input, marginTop: 16 }}
+                                style={{
+                                    ...styles.input,
+                                    marginTop: 16,
+                                    backgroundColor:
+                                        email !== '' ? '#FFFFFF' : '#F6F6F6',
+                                    color: email !== '' ? '#212121' : '#BDBDBD',
+                                }}
                                 placeholder="Адреса електронної пошти"
+                                autoCapitalize="none"
                                 onFocus={() => setIsShowKeyBoard(true)}
                                 onChangeText={setEmail}
                                 value={email}
                             />
                             <TextInput
-                                style={{ ...styles.input, marginTop: 16 }}
+                                style={{
+                                    ...styles.input,
+                                    marginTop: 16,
+                                    backgroundColor:
+                                        password !== '' ? '#FFFFFF' : '#F6F6F6',
+                                    color:
+                                        password !== '' ? '#212121' : '#BDBDBD',
+                                }}
                                 placeholder="Пароль"
+                                autoCapitalize="none"
                                 secureTextEntry={true}
                                 inputMode="email"
                                 onFocus={() => setIsShowKeyBoard(true)}
@@ -182,7 +204,6 @@ const styles = StyleSheet.create({
     },
     input: {
         padding: 16,
-        backgroundColor: '#F6F6F6',
         borderWidth: 1,
         borderColor: '#E8E8E8',
         borderStyle: 'solid',
@@ -192,7 +213,6 @@ const styles = StyleSheet.create({
         fontStyle: 'normal',
         fontSize: 16,
         lineHeight: 19,
-        color: '#BDBDBD',
     },
     btn: {
         display: 'flex',

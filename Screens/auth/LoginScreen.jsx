@@ -73,15 +73,29 @@ const LoginScreen = () => {
                         <Text style={styles.title}>Увійти</Text>
                         <View style={styles.form}>
                             <TextInput
-                                style={styles.input}
+                                style={{
+                                    ...styles.input,
+                                    backgroundColor:
+                                        login !== '' ? '#FFFFFF' : '#F6F6F6',
+                                    color: login !== '' ? '#212121' : '#BDBDBD',
+                                }}
                                 placeholder="Логін"
+                                autoCapitalize="none"
                                 onFocus={() => setIsShowKeyBoard(true)}
                                 onChangeText={setLogin}
                                 value={login}
                             />
                             <TextInput
-                                style={{ ...styles.input, marginTop: 16 }}
+                                style={{
+                                    ...styles.input,
+                                    marginTop: 16,
+                                    backgroundColor:
+                                        password !== '' ? '#FFFFFF' : '#F6F6F6',
+                                    color:
+                                        password !== '' ? '#212121' : '#BDBDBD',
+                                }}
                                 placeholder="Пароль"
+                                autoCapitalize="none"
                                 secureTextEntry={showPassword}
                                 onFocus={() => setIsShowKeyBoard(true)}
                                 onChangeText={setPassword}
@@ -162,7 +176,6 @@ const styles = StyleSheet.create({
     },
     input: {
         padding: 16,
-        backgroundColor: '#F6F6F6',
         borderWidth: 1,
         borderColor: '#E8E8E8',
         borderStyle: 'solid',
@@ -172,7 +185,6 @@ const styles = StyleSheet.create({
         fontStyle: 'normal',
         fontSize: 16,
         lineHeight: 19,
-        color: '#BDBDBD',
     },
     btn: {
         display: 'flex',
