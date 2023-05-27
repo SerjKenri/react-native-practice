@@ -26,6 +26,14 @@ const RegistrationScreen = () => {
     const [isReady, setIsReady] = useState(false);
     const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
 
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+
+    const onRegister = () => {
+        console.log(`login: ${login}, password: ${password}, email: ${email}`);
+    };
+
     const hideKeyboard = () => {
         setIsShowKeyBoard(false);
         Keyboard.dismiss();
@@ -83,24 +91,34 @@ const RegistrationScreen = () => {
                                 style={styles.input}
                                 placeholder="Логін"
                                 onFocus={() => setIsShowKeyBoard(true)}
+                                onChangeText={setLogin}
+                                value={login}
                             />
                             <TextInput
                                 style={{ ...styles.input, marginTop: 16 }}
                                 placeholder="Адреса електронної пошти"
                                 onFocus={() => setIsShowKeyBoard(true)}
+                                onChangeText={setEmail}
+                                value={email}
                             />
                             <TextInput
                                 style={{ ...styles.input, marginTop: 16 }}
                                 placeholder="Пароль"
                                 secureTextEntry={true}
+                                inputMode="email"
                                 onFocus={() => setIsShowKeyBoard(true)}
+                                onChangeText={setPassword}
+                                value={password}
                             />
                             <TouchableOpacity>
                                 <Text style={styles.passwordShow}>
                                     Показати
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}>
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={onRegister}
+                            >
                                 <Text style={styles.btnText}>
                                     Зарегестрироваться
                                 </Text>

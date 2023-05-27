@@ -25,6 +25,14 @@ const loadApplication = async () => {
 const LoginScreen = () => {
     const [isReady, setIsReady] = useState(false);
     const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
+    const [showPassword, setShowPasswor] = useState(true);
+
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+
+    const onLogin = () => {
+        console.log(`login: ${login}, password: ${password}`);
+    };
 
     const hideKeyboard = () => {
         setIsShowKeyBoard(false);
@@ -68,19 +76,28 @@ const LoginScreen = () => {
                                 style={styles.input}
                                 placeholder="Логін"
                                 onFocus={() => setIsShowKeyBoard(true)}
+                                onChangeText={setLogin}
+                                value={login}
                             />
                             <TextInput
                                 style={{ ...styles.input, marginTop: 16 }}
                                 placeholder="Пароль"
-                                secureTextEntry={true}
+                                secureTextEntry={showPassword}
                                 onFocus={() => setIsShowKeyBoard(true)}
+                                onChangeText={setPassword}
+                                value={password}
                             />
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => setShowPasswor(!showPassword)}
+                            >
                                 <Text style={styles.passwordShow}>
-                                    Показати
+                                    {!showPassword ? 'Скрити' : 'Показати'}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}>
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={onLogin}
+                            >
                                 <Text style={styles.btnText}>Увійти</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.regInBtn}>
