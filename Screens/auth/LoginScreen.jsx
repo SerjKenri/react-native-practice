@@ -5,30 +5,25 @@ import {
     TouchableOpacity,
     Text,
     ImageBackground,
-    Image,
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
     Keyboard,
     Platform,
     Dimensions,
 } from 'react-native';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-const loadApplication = async () => {
-    await Font.loadAsync({
-        'Roboto-Regular': require('../../assets/fonts/Roboto/Roboto-Regular.ttf'),
-    });
-};
+
 
 const LoginScreen = () => {
-    const [isReady, setIsReady] = useState(false);
     const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
     const [showPassword, setShowPasswor] = useState(true);
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigation = useNavigation();
 
     const onLogin = () => {
         console.log(`login: ${login}, password: ${password}`);
@@ -39,15 +34,6 @@ const LoginScreen = () => {
         Keyboard.dismiss();
     };
 
-    if (!isReady) {
-        return (
-            <AppLoading
-                startAsync={loadApplication}
-                onFinish={() => setIsReady(true)}
-                onError={console.warn}
-            />
-        );
-    }
 
     return (
         <TouchableWithoutFeedback onPress={hideKeyboard}>
@@ -114,7 +100,12 @@ const LoginScreen = () => {
                             >
                                 <Text style={styles.btnText}>Увійти</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.regInBtn}>
+                            <TouchableOpacity
+                                style={styles.regInBtn}
+                                onPress={() =>
+                                    navigation.navigate('Registration')
+                                }
+                            >
                                 <Text style={styles.regInBtn}>
                                     Немає акаунту?{' '}
                                     <Text style={styles.regText}>
@@ -130,7 +121,7 @@ const LoginScreen = () => {
     );
 };
 
-export { LoginScreen };
+export default LoginScreen;
 
 const styles = StyleSheet.create({
     container: {

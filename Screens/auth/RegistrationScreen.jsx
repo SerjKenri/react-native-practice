@@ -12,25 +12,18 @@ import {
     Platform,
     Dimensions,
 } from 'react-native';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-
-const loadApplication = async () => {
-    await Font.loadAsync({
-        'Roboto-Regular': require('../../assets/fonts/Roboto/Roboto-Regular.ttf'),
-    });
-};
+import { useNavigation } from '@react-navigation/native';
 
 const RegistrationScreen = () => {
-    const [isReady, setIsReady] = useState(false);
     const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
-
     const [avatar, setAvatar] = useState(null);
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+
+    const navigation = useNavigation();
 
     const onRegister = () => {
         console.log(`login: ${login}, password: ${password}, email: ${email}`);
@@ -57,16 +50,6 @@ const RegistrationScreen = () => {
             setAvatar(result.assets[0].uri);
         }
     };
-
-    if (!isReady) {
-        return (
-            <AppLoading
-                startAsync={loadApplication}
-                onFinish={() => setIsReady(true)}
-                onError={console.warn}
-            />
-        );
-    }
 
     return (
         <TouchableWithoutFeedback onPress={hideKeyboard}>
@@ -193,7 +176,10 @@ const RegistrationScreen = () => {
                                     Зарегестрироваться
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.logInBtn}>
+                            <TouchableOpacity
+                                style={styles.logInBtn}
+                                onPress={() => navigation.navigate('Login')}
+                            >
                                 <Text style={styles.logInBtnText}>
                                     Уже есть аккаунт? Войти
                                 </Text>
@@ -206,7 +192,7 @@ const RegistrationScreen = () => {
     );
 };
 
-export { RegistrationScreen };
+export default RegistrationScreen;
 
 const styles = StyleSheet.create({
     container: {
