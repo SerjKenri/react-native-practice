@@ -79,7 +79,7 @@ const CreatePostsScreen = () => {
         }
 
         navigation.navigate('DefaultScreen', {
-            id: Math.random().toString(),
+            id: Math.random().toString().slice(2),
             ...location,
             ...createPostForm,
         });
